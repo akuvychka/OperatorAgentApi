@@ -11910,3 +11910,17 @@ Processing by GraphqlController#execute as */*
 Completed 200 OK in 81ms (Views: 0.3ms | ActiveRecord: 3.2ms | Allocations: 22061)
 
 
+Started POST "/graphql" for ::1 at 2020-11-12 02:20:33 +0200
+  [1m[35m (0.6ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by GraphqlController#execute as */*
+  Parameters: {"query"=>"mutation {\n    updateUser(input: { id: 7, contacts: [1,3]}) {\n        name\n        contacts {\n            id\n        }\n    }\n}", "graphql"=>{"query"=>"mutation {\n    updateUser(input: { id: 7, contacts: [1,3]}) {\n        name\n        contacts {\n            id\n        }\n    }\n}"}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT `users`.* FROM `users` WHERE `users`.`id` = 2 AND `users`.`user_role` = 'agent' ORDER BY `users`.`id` ASC LIMIT 1[0m
+  ↳ app/controllers/application_controller.rb:10:in `fetch_user'
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT `users`.* FROM `users` WHERE `users`.`id` = 7 LIMIT 1[0m
+  ↳ app/graphql/mutations/user_mutations/user_update.rb:13:in `resolve'
+  [1m[36mUser Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM `users` INNER JOIN `companions` ON `users`.`id` = `companions`.`contact_id` WHERE `companions`.`user_id` = 2 AND `users`.`id` = 7 LIMIT 1[0m
+  ↳ app/models/abilities/manage_user_ability.rb:9:in `initialize'
+Completed 200 OK in 76ms (Views: 0.9ms | ActiveRecord: 4.5ms | Allocations: 30189)
+
+
